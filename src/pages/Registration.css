@@ -1,0 +1,67 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .Registration {
+    width: 300px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+  
+  .Registration h1 {
+    font-size: 24px;
+    text-align: center;
+  }
+  
+  .Registration h2 {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .Registration form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .Registration form table {
+    width: 100%;
+  }
+  
+  .Registration form input[type="text"],
+  .Registration form input[type="email"],
+  .Registration form input[type="password"],
+  .Registration form input[type="submit"] {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  
+  .Registration form input[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  .Registration form input[type="submit"]:hover {
+    background-color: #0056b3;
+  }
+  
+  .Registration form td {
+    padding: 8px;
+  }
+  
+  .Registration form td:first-child {
+    width: 120px;
+  }
+  
+  .Registration form td:last-child {
+    text-align: right;
+  }
+  
