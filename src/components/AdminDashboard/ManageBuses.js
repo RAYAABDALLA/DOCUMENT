@@ -1,24 +1,74 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './ManageBuses.css';
 
 function ManageBuses() {
   const [buses, setBuses] = useState([]);
+  const [busName, setBusName] = useState('');
+  const [type, setType] = useState('');
+  const [capacity, setCapacity] = useState('');
 
   useEffect(() => {
-    // Fetch bus data from your API
-    fetch('/api/buses')
-      .then(response => response.json())
-      .then(data => setBuses(data))
-      .catch(error => console.error('Error fetching buses:', error));
+    fetchBuses();
   }, []);
+
+  const fetchBuses = () => {
+    axios.get('http://localhost:8080/api/buses')
+      .then(response => setBuses(response.data))
+      .catch(error => console.error('Error fetching buses:', error));
+  };
+
+  const handleAddBus = (e) => {
+    e.preventDefault();
+    const newBus = { busName, type, capacity };
+    axios.post('http://localhost:8080/api/buses', newBus)
+      .then(response => {
+        setBuses([...buses, response.data]);
+        setBusName('');
+        setType('');
+        setCapacity('');
+      })
+      .catch(error => console.error('Error adding bus:', error));
+  };
+
+  const handleDeleteBus = (id) => {
+    axios.delete(`http://localhost:8080/api/buses/${id}`)
+      .then(() => {
+        setBuses(buses.filter(bus => bus.busId !== id));
+      })
+      .catch(error => console.error('Error deleting bus:', error));
+  };
 
   return (
     <div className="manage-buses">
       <h2>Manage Buses</h2>
+      <form onSubmit={handleAddBus}>
+        <input
+          type="text"
+          placeholder="Bus Name"
+          value={busName}
+          onChange={(e) => setBusName(e.target.value)}
+          required
+        />
+        <input
+          type="text"
+          placeholder="Type"
+          value={type}
+          onChange={(e) => setType(e.target.value)}
+          required
+        />
+        <input
+          type="text"
+          placeholder="Capacity"
+          value={capacity}
+          onChange={(e) => setCapacity(e.target.value)}
+          required
+        />
+        <button type="submit">Add Bus</button>
+      </form>
       <table className="buses-table">
         <thead>
           <tr>
-            <th>Bus ID</th>
             <th>Bus Name</th>
             <th>Type</th>
             <th>Capacity</th>
@@ -27,14 +77,12 @@ function ManageBuses() {
         </thead>
         <tbody>
           {buses.map(bus => (
-            <tr key={bus.id}>
-              <td>{bus.id}</td>
-              <td>{bus.name}</td>
+            <tr key={bus.busId}>
+              <td>{bus.busName}</td>
               <td>{bus.type}</td>
               <td>{bus.capacity}</td>
               <td>
-                <button className="action-btn">Edit</button>
-                <button className="action-btn delete-btn">Delete</button>
+                <button className="action-btn" onClick={() => handleDeleteBus(bus.busId)}>Delete</button>
               </td>
             </tr>
           ))}

@@ -16,7 +16,6 @@ function BookingTickets() {
       .then(response => {
         console.log('Booking successful:', response.data);
         alert('Booking successful');
-        // Reset form fields or handle success message
         setPassengerName('');
         setBusRoute('');
         setSeatNumber(1);

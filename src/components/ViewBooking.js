@@ -36,13 +36,13 @@ function ViewBooking() {
         </thead>
         <tbody>
           {bookings.map(booking => (
-            <tr key={booking.bookingId}>
+            <tr key={booking.id}>
               <td>{booking.passengerName}</td>
               <td>{booking.busRoute}</td>
               <td>{booking.seatNumber}</td>
               <td>{new Date(booking.bookingDate).toLocaleDateString()}</td>
               <td>
-                <button onClick={() => handleDelete(booking.bookingId)}>Delete</button>
+                <button onClick={() => handleDelete(booking.id)}>Delete</button>
               </td>
             </tr>
           ))}
